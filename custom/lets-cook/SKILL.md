@@ -22,7 +22,16 @@ lets-cook stack). Source material for playbooks lives in
    the whole codebase: architecture map, entry files, commands, hazards.
    If no hub exists and the task is not trivial, create one with
    `project-onboard` before deep work. Update hub lines you prove stale.
-3. Match the task to a playbook below, then work it.
+3. **Claim a worktree before writing anything.** If the task will modify
+   code and you are not already inside an isolated cook worktree, create
+   one now (branch `cooks/<short-task>`, directory
+   `../.cook/<repo>/<short-task>`, via the `using-git-worktrees` skill)
+   and work only in it. Never code in a worktree another agent claimed.
+   Appending a one-line claim to `../.cook/<repo>/<short-task>/.cook-claim`
+   (timestamp + task) makes the winner visible to the others. Read-only
+   tasks skip this and stay in place. The whole PR playbook
+   (`playbooks/opening-a-pr.md`) then runs from that same worktree.
+4. Match the task to a playbook below, then work it.
 
 ## Non-negotiables
 

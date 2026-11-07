@@ -3,13 +3,14 @@
 Invoked at the end of every other playbook. No harness-specific tooling is
 assumed: everything here works through plain `git` and `gh`.
 
-**Isolation.** Work from a git worktree off `main` (the
-`using-git-worktrees` skill owns the details). Subagents inherit the same
-worktree. Multiple delegation rounds on one branch each get their own
-worktree, or `git fetch && git reset origin/<branch>` between them. Dirty
-branch holding unrelated work: patch the unrelated part out, fresh
-worktree, apply the part back. Snarled state: reset from `main`, redo
-minimally.
+**Isolation.** Work from the cook worktree claimed in the router's first
+moves (`../.cook/<repo>/<short-task>`, branch `cooks/<short-task>`); you
+never start a landing playbook from a bare checkout another agent may
+touch. Subagents inherit the same worktree. Multiple delegation rounds on
+one branch each get their own worktree, or `git fetch && git reset
+origin/<branch>` between them. Dirty worktree holding unrelated work:
+patch the unrelated part out, fresh worktree, apply the part back.
+Snarled state: reset from `main`, redo minimally.
 
 **Commits.** Conventional prefixes (`feat:` `fix:` `chore:` `refactor:`),
 one commit per verifiable unit. Commit liberally while working; before
