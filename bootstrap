@@ -1,0 +1,141 @@
+#!/usr/bin/env python3
+"""lets-cook stack bootstrap.
+
+Installs custom + external agent skills into ~/.agents/skills and mirrors
+them into harness dirs that do not read ~/.agents/skills. Sources are
+shallow-cloned into ~/.cache/lets-cook/db (kept, the lets-cook router reads
+pstack playbooks from there).
+
+Usage: ./bootstrap            (from a clone of yass-gr/lets-cook)
+       python3 bootstrap      (same thing)
+Env overrides: LETSCOOK_STACK, LETSCOOK_CACHE, LETSCOOK_STACK_URL
+"""
+import json
+import os
+import shutil
+import subprocess
+import sys
+
+STACK = os.environ.get("LETSCOOK_STACK") or os.path.dirname(os.path.abspath(__file__))
+AGENTS = os.path.expanduser("~/.agents/skills")
+CACHE = os.path.expanduser(os.environ.get("LETSCOOK_CACHE", "~/.cache/lets-cook/db"))
+STACK_URL = os.environ.get("LETSCOOK_STACK_URL", "yass-gr/lets-cook")
+MIRRORS = ["~/.claude/skills", "~/.gemini/skills"]
+MANIFEST = os.path.join(STACK, "external", "manifest.json")
+
+
+def run(cmd, cwd=None):
+    subprocess.run(cmd, cwd=cwd, check=True)
+
+
+def ensure_clone(name: str, url: str) -> str:
+    os.makedirs(CACHE, exist_ok=True)
+    dest = os.path.join(CACHE, name)
+    if os.path.isdir(os.path.join(dest, ".git")):
+        print(f"→ updating source {name} ({url})")
+        run(["git", "pull", "--ff-only"], cwd=dest)
+    else:
+        print(f"→ cloning source {name} ({url})")
+        if os.path.isdir(dest):
+            shutil.rmtree(dest)
+        run(["git", "clone", "--depth", "1", f"https://github.com/{url}", dest])
+    return dest
+
+
+def install_dir(src: str, dst: str) -> None:
+    if os.path.islink(dst):
+        os.unlink(dst)
+    elif os.path.isdir(dst):
+        shutil.rmtree(dst)
+    shutil.copytree(src, dst)
+    # Mark as stack-managed so future runs can distinguish from foreign skills
+    with open(os.path.join(dst, ".lets-cook-managed"), "w") as fh:
+        fh.write("installed by lets-cook bootstrap; safe to replace\n")
+
+
+def unmanaged(dst: str) -> bool:
+    """True when dst is an existing real dir the stack does not own."""
+    return os.path.isdir(dst) and not os.path.exists(
+        os.path.join(dst, ".lets-cook-managed")
+    )
+
+
+def main() -> None:
+    if not os.path.isfile(MANIFEST):
+        sys.exit(f"manifest not found: {MANIFEST}")
+    with open(MANIFEST) as fh:
+        manifest = json.load(fh)
+
+    os.makedirs(AGENTS, exist_ok=True)
+
+    # 1) custom skills (the only thing this repo vendors)
+    print("→ installing custom skills")
+    for name in sorted(os.listdir(os.path.join(STACK, "custom"))):
+        install_dir(os.path.join(STACK, "custom", name), os.path.join(AGENTS, name))
+        print(f"  ✓ lets-cook/{name}")
+
+    # 2) external skills from source clones
+    installed = count = 0
+    managed = []
+    for source in manifest["sources"]:
+        clone = ensure_clone(source["name"], source["repo"])
+        for skill in source["skills"]:
+            if isinstance(skill, dict):
+                name = skill["name"]
+                path = skill.get("path", name)
+            else:
+                name = skill
+                path = skill
+            src = os.path.join(clone, source.get("subdir", "").strip("/"), path)
+            dst = os.path.join(AGENTS, name)
+            if unmanaged(dst):
+                if not ADOPT:
+                    print(f"  ⚠ {name}: unmanaged skill with the same name exists; skipping (adopt with LETSCOOK_ADOPT=1).", file=sys.stderr)
+                    continue
+                print(f"  ↺ adopting {skill} (replaces unmanaged copy with stack version)")
+            install_dir(src, dst)
+            installed += 1
+            managed.append(name)
+    count = installed
+
+    # 3) harness mirrors for dirs that do not read ~/.agents/skills
+    managed += sorted(
+        n for n in os.listdir(os.path.join(STACK, "custom"))
+        if n != "lets-cook-managed"
+    )
+    for mirror in MIRRORS:
+        parent = os.path.dirname(os.path.expanduser(mirror))
+        if not os.path.isdir(parent):
+            continue
+        mirror_abs = os.path.expanduser(mirror)
+        os.makedirs(mirror_abs, exist_ok=True)
+        print(f"→ mirroring skills into {mirror_abs}")
+        for name in managed:
+            src = os.path.join(AGENTS, name)
+            if os.path.isdir(src):
+                link = os.path.join(mirror_abs, name)
+                try:
+                    if os.path.islink(link):
+                        os.unlink(link)
+                    os.symlink(src, link)
+                except OSError as err:
+                    print(f"  ✗ {name}: {err}", file=sys.stderr)
+
+    print()
+    print(f"Done. {count} external + 3 custom skills installed under {AGENTS}")
+    print()
+    print("In any project, with any agent:")
+    print("  lets-cook / 'lets cook'       → the router for real work")
+    print("  project-onboard ('onboard')   → one-time project hub")
+    print("  'sync the stack'              → stack-sync skill, updates from source")
+
+
+def notmanaged(dst: str) -> bool:
+    """True when dst is a real dir that no source owns."""
+    MANAGED_MARK = ".lets-cook-managed"
+    return not os.path.exists(os.path.join(dst, MANAGED_MARK))
+
+
+if __name__ == "__main__":
+    ADOPT = bool(os.environ.get("LETSCOOK_ADOPT"))
+    main()

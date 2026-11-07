@@ -1,0 +1,119 @@
+{
+  "version": 2,
+  "sources": [
+    {
+      "name": "mattpocock",
+      "repo": "mattpocock/skills",
+      "subdir": "",
+      "skills": [
+        { "name": "chief-of-staff", "path": "skills/in-progress/chief-of-staff" },
+        { "name": "claude-handoff", "path": "skills/in-progress/claude-handoff" },
+        { "name": "code-review", "path": "skills/engineering/code-review" },
+        { "name": "codebase-design", "path": "skills/engineering/codebase-design" },
+        { "name": "diagnosing-bugs", "path": "skills/engineering/diagnosing-bugs" },
+        { "name": "domain-modeling", "path": "skills/engineering/domain-modeling" },
+        { "name": "handoff", "path": "skills/productivity/handoff" },
+        { "name": "improve-codebase-architecture", "path": "skills/engineering/improve-codebase-architecture" },
+        { "name": "migrate-to-shoehorn", "path": "skills/misc/migrate-to-shoehorn" },
+        { "name": "pr", "path": "skills/engineering/pr" },
+        { "name": "prototype", "path": "skills/engineering/prototype" },
+        { "name": "research", "path": "skills/engineering/research" },
+        { "name": "retro", "path": "skills/engineering/retro" },
+        { "name": "scaffold-exercises", "path": "skills/misc/scaffold-exercises" },
+        { "name": "setup-pre-commit", "path": "skills/misc/setup-pre-commit" },
+        { "name": "setup-ts-deep-modules", "path": "skills/in-progress/setup-ts-deep-modules" },
+        { "name": "teach", "path": "skills/productivity/teach" },
+        { "name": "to-questionnaire", "path": "skills/productivity/to-questionnaire" },
+        { "name": "wait-what", "path": "skills/productivity/wait-what" },
+        { "name": "writing-beats", "path": "skills/in-progress/writing-beats" },
+        { "name": "writing-for-agents", "path": "skills/productivity/writing-for-agents" },
+        { "name": "writing-fragments", "path": "skills/in-progress/writing-fragments" },
+        { "name": "writing-shape", "path": "skills/in-progress/writing-shape" }
+      ]
+    },
+    {
+      "name": "pstack",
+      "repo": "poteto/plugins",
+      "subdir": "pstack/skills",
+      "skills": [
+        { "name": "architect", "path": "architect" },
+        { "name": "figure-it-out", "path": "figure-it-out" },
+        { "name": "how", "path": "how" },
+        { "name": "principle-boundary-discipline", "path": "principle-boundary-discipline" },
+        { "name": "principle-build-the-lever", "path": "principle-build-the-lever" },
+        { "name": "principle-encode-lessons-in-structure", "path": "principle-encode-lessons-in-structure" },
+        { "name": "principle-exhaust-the-design-space", "path": "principle-exhaust-the-design-space" },
+        { "name": "principle-experience-first", "path": "principle-experience-first" },
+        { "name": "principle-fix-root-causes", "path": "principle-fix-root-causes" },
+        { "name": "principle-foundational-thinking", "path": "principle-foundational-thinking" },
+        { "name": "principle-guard-the-context-window", "path": "principle-guard-the-context-window" },
+        { "name": "principle-laziness-protocol", "path": "principle-laziness-protocol" },
+        { "name": "principle-make-operations-idempotent", "path": "principle-make-operations-idempotent" },
+        { "name": "principle-migrate-callers-then-delete-legacy-apis", "path": "principle-migrate-callers-then-delete-legacy-apis" },
+        { "name": "principle-minimize-reader-load", "path": "principle-minimize-reader-load" },
+        { "name": "principle-never-block-on-the-human", "path": "principle-never-block-on-the-human" },
+        { "name": "principle-outcome-oriented-execution", "path": "principle-outcome-oriented-execution" },
+        { "name": "principle-prove-it-works", "path": "principle-prove-it-works" },
+        { "name": "principle-redesign-from-first-principles", "path": "principle-redesign-from-first-principles" },
+        { "name": "principle-separate-before-serializing-shared-state", "path": "principle-separate-before-serializing-shared-state" },
+        { "name": "principle-sequence-verifiable-units", "path": "principle-sequence-verifiable-units" },
+        { "name": "principle-subtract-before-you-add", "path": "principle-subtract-before-you-add" },
+        { "name": "principle-type-system-discipline", "path": "principle-type-system-discipline" },
+        { "name": "reflect", "path": "reflect" },
+        { "name": "show-me-your-work", "path": "show-me-your-work" },
+        { "name": "tdd", "path": "tdd" },
+        { "name": "typescript-best-practices", "path": "typescript-best-practices" },
+        { "name": "unslop", "path": "unslop" },
+        { "name": "why", "path": "why" }
+      ]
+    },
+    {
+      "name": "superpowers",
+      "repo": "obra/superpowers",
+      "subdir": "skills",
+      "skills": [
+        { "name": "dispatching-parallel-agents", "path": "dispatching-parallel-agents" },
+        { "name": "finishing-a-development-branch", "path": "finishing-a-development-branch" },
+        { "name": "subagent-driven-development", "path": "subagent-driven-development" },
+        { "name": "using-git-worktrees", "path": "using-git-worktrees" },
+        { "name": "verification-before-completion", "path": "verification-before-completion" }
+      ]
+    }
+  ],
+  "excluded": {
+    "conflict-lost": {
+      "mattpocock:tdd": "pstack wins (pragmatic)",
+      "mattpocock:typescript-best-practices": "pstack wins (grounded in type-system-discipline)",
+      "mattpocock:triage": "needs tracker/planning infra",
+      "mattpocock:wizard": "one-off harness wizard; revisit on demand",
+      "superpowers:test-driven-development": "strict TDD; pragmatic pstack wins",
+      "superpowers:systematic-debugging": "diagnosing-bugs wins (fastest loop)",
+      "superpowers:requesting-code-review": "single gate: code-review wins",
+      "superpowers:receiving-code-review": "single gate: code-review wins",
+      "superpowers:writing-plans": "code-first, no planning",
+      "superpowers:executing-plans": "code-first, no planning",
+      "superpowers:brainstorming": "code-first, no planning",
+      "superpowers:writing-skills": "writing-for-agents covers it",
+      "superpowers:using-superpowers": "bootstrap machinery, out of scope",
+      "superpowers:diagnosing-superpowers": "meta-tool for a stack we partially take",
+      "pstack:poteto-mode": "forked as custom/lets-cook",
+      "pstack:automate-me": "redundant with lets-cook"
+    },
+    "rejected-by-design": {
+      "pstack:interrogate": "no multi-model panels",
+      "pstack:arena": "no multi-model panels",
+      "pstack:setup-pstack": "no model routing",
+      "mattpocock:to-spec": "no planning",
+      "mattpocock:to-tickets": "no planning",
+      "mattpocock:wayfinder": "no planning",
+      "mattpocock:loop-me": "no planning",
+      "mattpocock:grill-me": "grilling carries the interview loop",
+      "mattpocock:grill-with-docs": "no planning",
+      "mattpocock:ask-matt": "router conflict with lets-cook",
+      "mattpocock:setup-matt-pocock-skills": "tracker planning infra",
+      "mattpocock:implement": "router + playbooks cover implementation",
+      "mattpocock:implement-spec": "planning chain byproduct",
+      "mattpocock:git-guardrails-claude-code": "Claude-only hooks; guardrails are router rules"
+    }
+  }
+}
