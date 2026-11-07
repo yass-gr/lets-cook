@@ -34,8 +34,11 @@ lets-cook stack). Source material for playbooks lives in
 - Bug fix with a cheap test path → the **tdd** skill: red-green first, then
   the fix. Everything else → no test theater, but **prove it works** before
   declaring done (**verification-before-completion**).
-- Before merging or shipping → the **code-review** skill (standards + spec
+- Before merging or shipping → the `code-review` skill (standards + spec
   axes) unless the user directly says skip. One review gate, no panels.
+  Then the local **playbooks/opening-a-pr.md**: small stacked PRs, native
+  babysit with `gh`, rebase-merge + delete-branch on own repos, PR-only
+  handoff elsewhere, private-by-default repo creation, hard pause rules.
 - Any prose surface → the **unslop** style. Short declarative sentences,
   no AI tells. See **Writing the reply** below.
 - Long, autonomous, or stepped-away work → a decision trail via
@@ -173,7 +176,10 @@ Match the task, open the playbook file, follow the steps. Playbooks live in
 - Resuming prior in-flight work → `session-pickup.md`
 - Suspending cleanly for resume → `pause-safely.md`
 - Multi-phase or stacked-PR work → `multi-phase-plan.md`
-- Opening a PR, end of every playbook → `opening-a-pr.md`
+- Opening a PR, end of every playbook → local file
+  `playbooks/opening-a-pr.md` next to this skill (agent-agnostic poteto
+  style: babysit natively with `gh`, land on own repos after review-gate
+  + green CI, pause for irreversible writes)
 
 A step you choose not to do stays in your todo list with a one-line
 `skip: reason`. Skipping silently is not allowed.
