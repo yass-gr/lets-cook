@@ -122,11 +122,12 @@ def main() -> None:
                     print(f"  ✗ {name}: {err}", file=sys.stderr)
 
     print()
-    print(f"Done. {count} external + 3 custom skills installed under {AGENTS}")
-    print()
+    custom_count = len(os.listdir(os.path.join(STACK, "custom")))
+    print(f"Done. {count} external + {custom_count} custom skills installed under {AGENTS}")
     print("In any project, with any agent:")
     print("  lets-cook / 'lets cook'       → the router for real work")
     print("  project-onboard ('onboard')   → one-time project hub")
+    print("  ship ('push', 'open a PR')    → the finish line, every code task")
     print("  'sync the stack'              → stack-sync skill, updates from source")
 
 
