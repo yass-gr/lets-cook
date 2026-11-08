@@ -38,8 +38,14 @@ intent from docs.
 
    - One line: "Before any work, load `<project-name>` from
      ./agents/skills/."
+   - One line: "Finished a task that changed code? Do not go silent: run
+     the ship skill's finish line (commit → review gate → push → PR →
+     babysit → land), or, if you cannot reach it, ask 'open the PR and
+     ship?'."
    - Up to ten lines of fragments that must be visible even before the hub
-     loads: language and package manager, run command, test command.
+     loads: language and package manager, run command, test command. If
+     the lets-cook stack is installed, the ship rule may instead point at
+     the installed `ship` skill and the hub keeps its stub to five lines.
 
 Merging: if the project already has AGENTS.md/CLAUDE.md content, keep it
 and append the pointer. Never overwrite human-written docs.

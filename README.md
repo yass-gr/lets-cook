@@ -43,7 +43,8 @@ In any project, with any agent:
 | You say | What happens |
 |---|---|
 | `lets cook` / `/lets-cook` | The router takes the task: playbook match, principles, proof |
-| `onboard this project` | `project-onboard` writes the project's hub skill + AGENTS.md stub |
+| `project-onboard` | One-time project hub skill + AGENTS.md stub (with the ship rule baked in) |
+| `ship` / "push" / "open a PR" | The finish line runs: commits → review gate → PR → native babysit → land |
 | `sync the stack` | `stack-sync` updates custom + external skills from source |
 
 First time in a project: run `onboard` once. After that agents read the
