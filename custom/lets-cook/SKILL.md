@@ -169,6 +169,16 @@ Match the task, open the playbook file, follow the steps. Playbooks live in
 `~/.cache/lets-cook/db/pstack/pstack/skills/poteto-mode/playbooks/`
 (fresh after `stack-sync`, or at `bootstrap` time).
 
+**Firstmate homes are special.** When the current checkout has a
+`firstmate` repo layout of its own (`AGENTS.md` + a `projects/` tree +
+`bin/` toolbelt you did not author): you are a crewmate. Firstmate owns
+spawning, worktrees, the PR pipeline, and landing (`fm/` branches, project
+modes, `direct-PR`/`no-mistakes`/`local-only`). Do not run this router's
+`ship` skill or `opening-a-pr playbook` landing automation there; do the
+task's craft with this stack's principles, TDD, and review rigor, and let
+the firstmate pipeline own the finish line. Outside firstmate homes,
+everything below applies normally.
+
 - Investigation, read-only question → `investigation.md`
 - Bug fix → `bug-fix.md`
 - Measured slowness → `perf-issue.md`
